@@ -90,15 +90,15 @@ class VideoCamera(object):
         frame = cv2.flip(frame,1)
         
         img = cv2.rectangle(frame, (425,100),(625,300), (0,255,0), thickness=2, lineType=8, shift=0)
-        lower_blue = np.array([0, 0, 124])
-        upper_blue = np.array([123, 164, 255])
+        lower_blue = np.array([0, 0, 161])
+        upper_blue = np.array([179, 255, 255])
         imcrop = img[102:298, 427:623]
         hsv = cv2.cvtColor(imcrop, cv2.COLOR_BGR2HSV)
         mask = cv2.inRange(hsv, lower_blue, upper_blue)
         
         
     
-        cv2.putText(frame, self.img_text, (30, 400), cv2.FONT_HERSHEY_TRIPLEX, 1.5, (0, 255, 0))
+        cv2.putText(frame, self.img_text, (30, 400), cv2.FONT_HERSHEY_TRIPLEX, 1.5, (0, 255, 0),1,cv2.LINE_AA)
         img_name = "1.png"
         save_img = cv2.resize(mask, (image_x, image_y))
         cv2.imwrite(img_name, save_img)

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://kit.fontawesome.com/ed886e45fa.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css')}}">
+    <link href='https://fonts.googleapis.com/css?family=Delius Swash Caps' rel='stylesheet'>
+</head>
+
+<body>
+    {%  include 'header.html' %}
+    <div class="row  text-white h4 rounded m-2 mt-4 p-3 bolder shadow w-25 mx-auto text-center " id="cbg">
+        <div class="col animate__zoomIn">Alphabet Gesture Report</div>
+    </div>
+    <div class="container-fluid">
+        <div class="row m-2 mt-4">
+            <div class="col rounded shadow p-3 animate__animated animate__backInLeft" id="a1">
+                <h6 class="text-white">Model Accuracy Graph</h6>
+                <img src="{{ url_for('static',filename='images/accuracy1.png')}} " class="img-fluid" alt="" srcset="">
+            </div>
+            <div class="col rounded shadow mx-3 p-3 animate__animated animate__backInLeft" id="a2">
+                <h6 class="text-white">Model loss Graph</h6>
+                <img src="{{ url_for('static',filename='images/loss1.png')}}" class="img-fluid" alt="" srcset="">
+            </div>
+            <div class="col rounded shadow mx-3 p-3 text-center animate__animated animate__backInLeft" id="a3">
+                <div class="bar_container">
+                    <h6 class="text-white">Model Accuracy Percentage</h6>
+                    <div id="main_container">
+                        <div id="pbar" class="progress-pie-chart" data-percent="0">
+                            <div class="ppc-progress">
+                                <div class="ppc-progress-fill"></div>
+                            </div>
+                            <div class="ppc-percents">
+                                <div class="pcc-percents-wrapper">
+                                    <span>%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <progress style="display: none" id="progress_bar" value="0" max="98"></progress>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Dynamic Guesture-->
+    <hr />
+    <div class="row  text-white h4 rounded m-2 mt-5 p-3 bolder shadow mx-auto text-center" id="cbg" style="width:30rem">
+        <div class="col animate__zoomIn">Dynamic Hand Gesture Report</div>
+    </div>
+    <div class="container-fluid">
+        <div class="row m-2 mt-4">
+            <div class="col rounded shadow p-3 animate__animated animate__fadeInDown" id="a1">
+                <h6 class="text-white">Model Accuracy Graph</h6>
+                <img src="{{ url_for('static',filename='images/accuracy.png')}} " class="img-fluid" alt="" srcset="">
+            </div>
+            <div class="col rounded shadow mx-3 p-3 animate__animated animate__fadeInDown " id="a2">
+                <h6 class="text-white">Model loss Graph</h6>
+                <img src="{{ url_for('static',filename='images/loss.png')}}" class="img-fluid" alt="" srcset="">
+            </div>
+            <div class="col rounded shadow mx-3 text-center p-3 animate__animated animate__fadeInDown" id="a3">
+                <h6 class="text-white">Model Accuracy Percentage</h6>
+                <img src="{{ url_for('static',filename='images/pie94.png')}}" class="img-fluid mx-auto my-auto" alt=""
+                    srcset="">
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var progressbar = $('#progress_bar');
+        max = progressbar.attr('max');
+        time = (1000 / max) * 5;
+        value = progressbar.val();
+
+        var loading = function () {
+            value += 1;
+            addValue = progressbar.val(value);
+
+            $('.progress-value').html(value + '%');
+            var $ppc = $('.progress-pie-chart'),
+                deg = 360 * value / 100;
+            if (value > 50) {
+                $ppc.addClass('gt-50');
+            }
+
+            $('.ppc-progress-fill').css('transform', 'rotate(' + deg + 'deg)');
+            $('.ppc-percents span').html(value + '%');
+
+            if (value == max) {
+                clearInterval(animate);
+            }
+        };
+
+
+        var animate = setInterval(function () {
+            loading();
+        }, time);
+    });
+
+
+
+</script>
+
+</html>

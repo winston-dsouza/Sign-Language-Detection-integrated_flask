@@ -1,0 +1,20 @@
+<!--Navigation bar starts-->
+<nav class="navbar navbar-expand-sm  navbar-dark border-bottom border-info" style="background-color:rgb(20, 94, 222)">
+    <a class="navbar-brand" href="{{ url_for('index')}}" style="font-family: 'Delius Swash Caps'">
+        <img src="{{ url_for('static',filename='images/rating.svg')}}" width="30" height="30"> Sign Language Detection
+    </a>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item right active">
+                <a class="nav-link" href="{{ url_for('instruction')}}"><i class="fas fa-book-open"></i></i> Catalog</a>
+            </li>
+            <li class="nav-item right active">
+                <a class="nav-link" href="{{ url_for('dashboard')}}"><i class="fas fa-columns"></i> Dashboard</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!--Navigation Bar Ends-->
