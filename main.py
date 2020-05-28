@@ -1,13 +1,26 @@
-from flask import Flask, render_template, Response,request
+from flask import Flask, render_template, Response,request,redirect,url_for,make_response,jsonify
 from camera import VideoCamera
 from motion import VideoCameraMotion
+import time
+
+import itertools
+too=itertools.cycle([True,False])
+def foo():
+    return next(too)
+
+def obj(o):
+    j=o.predictor()
+    return j
+
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'mysecretkey'
 
 @app.route('/',methods=['GET', 'POST'])
 @app.route('/index', methods = ['GET', 'POST'])
 def index():
     return render_template('index.html')
+
 
 
 @app.route('/motion')
@@ -22,10 +35,6 @@ def gen(camera):
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
 
-@app.route('/video_feed')
-def video_feed():
-    return Response(gen(VideoCamera()),
-                    mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/video_motion')
 def video_motion():
@@ -41,5 +50,11 @@ def dashboard():
 
     return render_template('dashboard.html')
 
+@app.route('/toogle')
+def toogle():
+    VideoCameraMotion.flag=foo()
+    return redirect(url_for('index'))
+
 if __name__ == '__main__':
     app.run(debug=True)
+ 

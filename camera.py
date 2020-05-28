@@ -14,8 +14,7 @@ class VideoCamera(object):
     from tensorflow.keras.models import load_model
     classifier = load_model('model.h5')
     img_text = ''
-    def nothing(self,x):
-        pass
+    
     def __init__(self):
         self.video = cv2.VideoCapture(0)
         
@@ -97,12 +96,12 @@ class VideoCamera(object):
         mask = cv2.inRange(hsv, lower_blue, upper_blue)
         
         
-    
+        print(self.img_text)
         cv2.putText(frame, self.img_text, (30, 400), cv2.FONT_HERSHEY_TRIPLEX, 1.5, (0, 255, 0),1,cv2.LINE_AA)
         img_name = "1.png"
         save_img = cv2.resize(mask, (image_x, image_y))
         cv2.imwrite(img_name, save_img)
-        #print("{} written!".format(img_name))
+        print("{} written!".format(img_name))
         self.img_text = self.predictor()
         
 

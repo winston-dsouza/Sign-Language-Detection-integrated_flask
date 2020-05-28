@@ -15,7 +15,7 @@
 <body>
     {%  include 'header.html' %}
     <div class="row  text-white h4 rounded m-2 mt-4 p-3 bolder shadow w-25 mx-auto text-center " id="cbg">
-        <div class="col animate__zoomIn">Alphabet Gesture Report</div>
+        <div class="col animate__zoomIn">Gesture Report</div>
     </div>
     <div class="container-fluid">
         <div class="row m-2 mt-4">
@@ -49,27 +49,7 @@
         </div>
     </div>
     <!--Dynamic Guesture-->
-    <hr />
-    <div class="row  text-white h4 rounded m-2 mt-5 p-3 bolder shadow mx-auto text-center" id="cbg" style="width:30rem">
-        <div class="col animate__zoomIn">Dynamic Hand Gesture Report</div>
-    </div>
-    <div class="container-fluid">
-        <div class="row m-2 mt-4">
-            <div class="col rounded shadow p-3 animate__animated animate__fadeInDown" id="a1">
-                <h6 class="text-white">Model Accuracy Graph</h6>
-                <img src="{{ url_for('static',filename='images/accuracy.png')}} " class="img-fluid" alt="" srcset="">
-            </div>
-            <div class="col rounded shadow mx-3 p-3 animate__animated animate__fadeInDown " id="a2">
-                <h6 class="text-white">Model loss Graph</h6>
-                <img src="{{ url_for('static',filename='images/loss.png')}}" class="img-fluid" alt="" srcset="">
-            </div>
-            <div class="col rounded shadow mx-3 text-center p-3 animate__animated animate__fadeInDown" id="a3">
-                <h6 class="text-white">Model Accuracy Percentage</h6>
-                <img src="{{ url_for('static',filename='images/pie94.png')}}" class="img-fluid mx-auto my-auto" alt=""
-                    srcset="">
-            </div>
-        </div>
-    </div>
+   
 
 
 
