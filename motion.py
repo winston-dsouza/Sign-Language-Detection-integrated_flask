@@ -133,6 +133,8 @@ class VideoCameraMotion(object):
               return 'Y'
        elif self.result[0][25] == 1:
               return 'Z'
+       else:
+              return 'No gesture'
        
        
    
