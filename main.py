@@ -1,5 +1,4 @@
 from flask import Flask, render_template, Response,request,redirect,url_for,make_response,jsonify
-from camera import VideoCamera
 from motion import VideoCameraMotion
 import time
 

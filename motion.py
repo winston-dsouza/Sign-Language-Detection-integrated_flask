@@ -12,18 +12,17 @@ image_x, image_y = 64,64
 
 
 
-classes = [
-    "GO",
-    "Slow-down",
-    "No gesture",
-    "OK"
-    ]
+classes = ["Thumb Up",
+"No gesture",
+"Swiping Right",
+"Sliding Two Fingers Left",
+"Rolling Hand Forward",
+"Zooming Out With Two Fingers"]
 
 num_frames = 0
 
 
 class Conv3DModel(tf.keras.Model):
-
   def __init__(self):
     super(Conv3DModel, self).__init__()
     # Convolutions
@@ -32,13 +31,12 @@ class Conv3DModel(tf.keras.Model):
     self.conv2 = tf.compat.v2.keras.layers.Conv3D(64, (3, 3, 3), activation='relu', name="conv1", data_format='channels_last')
     self.pool2 = tf.keras.layers.MaxPool3D(pool_size=(2, 2,2), data_format='channels_last')
     self.convLSTM =tf.keras.layers.ConvLSTM2D(40, (3, 3))
-   
     self.flatten =  tf.keras.layers.Flatten(name="flatten")
 
     # Dense layers
     self.d1 = tf.keras.layers.Dense(128, activation='relu', name="d1")
-    self.out = tf.keras.layers.Dense(4, activation='softmax', name="output")
-   
+    self.out = tf.keras.layers.Dense(6, activation='softmax', name="output")
+    
 
   def call(self, x):
     x = self.conv1(x)
@@ -64,7 +62,7 @@ class VideoCameraMotion(object):
     new_model = Conv3DModel()
     new_model.compile(loss='sparse_categorical_crossentropy',
                   optimizer=tf.keras.optimizers.RMSprop())
-    new_model.load_weights('path_to_my_weights2')
+    new_model.load_weights('WEIGHTS_6GESTURES.index')
    
     def __init__(self):
         self.video = cv2.VideoCapture(0)
@@ -155,32 +153,6 @@ class VideoCameraMotion(object):
       
         if(self.flag == True):
             frame = cv2.flip(frame,1)
-           
-            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
-            self.to_predict.append(cv2.resize(gray, (64, 64)))
-       
-             
-            if len(self.to_predict) == 30:
-                frame_to_predict = np.array(self.to_predict, dtype=np.float32)
-                frame_to_predict = self.normaliz_data(frame_to_predict)
-               
-                predict = self.new_model.predict(frame_to_predict)
-                self.classe = classes[np.argmax(predict)]
-
-                #print('Classe = ',self.classe, 'Precision = ', np.amax(predict)*100,'%')
-                self.to_predict = []
-           
-            cv2.putText(frame, self.classe, (30, 100), cv2.FONT_ITALIC, 1.5, (224, 37, 20),7,cv2.LINE_AA)
-           
-            ret, jpeg = cv2.imencode('.jpg', frame)
-            return jpeg.tobytes()
-
-        else:
-
-
-           
-            frame = cv2.flip(frame,1)
         
             img = cv2.rectangle(frame, (425,100),(625,300), (0,255,0), thickness=1, lineType=8, shift=0)
         
@@ -202,6 +174,29 @@ class VideoCameraMotion(object):
             
            
 
+           
+            ret, jpeg = cv2.imencode('.jpg', frame)
+            return jpeg.tobytes()
+
+        else:
+            frame = cv2.flip(frame,1)
+           
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+            self.to_predict.append(cv2.resize(gray, (64, 64)))
+       
+             
+            if len(self.to_predict) == 30:
+                frame_to_predict = np.array(self.to_predict, dtype=np.float32)
+                frame_to_predict = self.normaliz_data(frame_to_predict)
+               
+                predict = self.new_model.predict(frame_to_predict)
+                self.classe = classes[np.argmax(predict)]
+
+                print('Classe = ',self.classe, 'Precision = ', np.amax(predict)*100,'%')
+                self.to_predict = []
+           
+            cv2.putText(frame, self.classe, (30, 100), cv2.FONT_ITALIC, 1.2, (224, 37, 20),6,cv2.LINE_AA)
            
             ret, jpeg = cv2.imencode('.jpg', frame)
             return jpeg.tobytes()
