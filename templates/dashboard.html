@@ -10,22 +10,26 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
     <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css')}}">
     <link href='https://fonts.googleapis.com/css?family=Delius Swash Caps' rel='stylesheet'>
+    <style>
+       #bg{ background-color: rgb(247, 244, 244);
+    }
+    </style>
 </head>
 
-<body>
+<body id="bg">
     {%  include 'header.html' %}
     <div class="row  text-white h4 rounded m-2 mt-4 p-3 bolder shadow w-25 mx-auto text-center " id="cbg">
         <div class="col animate__zoomIn">Gesture Report</div>
     </div>
-    <div class="container-fluid">
+    <div class="container-fluid mb-5">
         <div class="row m-2 mt-4">
-            <div class="col rounded shadow p-3 animate__animated animate__backInLeft" id="a1">
+            <div class="col rounded shadow p-3 animate__animated animate__backInLeft text-center" id="a1">
                 <h6 class="text-white">Model Accuracy Graph</h6>
                 <img src="{{ url_for('static',filename='images/accuracy1.png')}} " class="img-fluid" alt="" srcset="">
             </div>
-            <div class="col rounded shadow mx-3 p-3 animate__animated animate__backInLeft" id="a2">
+            <div class="col rounded shadow mx-3 p-3 animate__animated animate__backInLeft text-center" id="a2">
                 <h6 class="text-white">Model loss Graph</h6>
-                <img src="{{ url_for('static',filename='images/loss1.png')}}" class="img-fluid" alt="" srcset="">
+                <img src="{{ url_for('static',filename='images/loss1.png')}}" class="img-fluid " alt="" srcset="">
             </div>
             <div class="col rounded shadow mx-3 p-3 text-center animate__animated animate__backInLeft" id="a3">
                 <div class="bar_container">
@@ -48,8 +52,7 @@
             </div>
         </div>
     </div>
-    <!--Dynamic Guesture-->
-   
+    {%  include 'footer.html' %}
 
 
 

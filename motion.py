@@ -66,6 +66,8 @@ class VideoCameraMotion(object):
    
     def __init__(self):
         self.video = cv2.VideoCapture(0)
+        self.video.set(cv2.CAP_PROP_FRAME_WIDTH,1280)
+        self.video.set(cv2.CAP_PROP_FRAME_HEIGHT,720)
         self.to_predict = []
         self.classe =''
         self.cls=None
@@ -154,18 +156,18 @@ class VideoCameraMotion(object):
         if(self.flag == True):
             frame = cv2.flip(frame,1)
         
-            img = cv2.rectangle(frame, (425,100),(625,300), (0,255,0), thickness=1, lineType=8, shift=0)
+            img = cv2.rectangle(frame, (800,100),(1200,500), (0,255,0), thickness=1, lineType=8, shift=0)
         
           
             lower_blue = np.array([0, 0, 183])
             upper_blue = np.array([179, 255, 255])
-            imcrop = img[102:298, 427:623]
+            imcrop = img[102:498, 802:1198]
             hsv = cv2.cvtColor(imcrop, cv2.COLOR_BGR2HSV)
             mask = cv2.inRange(hsv, lower_blue, upper_blue)
            
            
        
-            cv2.putText(frame, self.img_text, (30, 100), cv2.FONT_ITALIC, 1.5, (224, 37, 20),7,cv2.LINE_AA)
+            cv2.putText(frame, self.img_text, (30, 100), cv2.FONT_ITALIC, 2.2, (224, 37, 20),7,cv2.LINE_AA)
             img_name = "1.png"
             save_img = cv2.resize(mask, (image_x, image_y))
             cv2.imwrite(img_name, save_img)
@@ -196,7 +198,7 @@ class VideoCameraMotion(object):
                 print('Classe = ',self.classe, 'Precision = ', np.amax(predict)*100,'%')
                 self.to_predict = []
            
-            cv2.putText(frame, self.classe, (30, 100), cv2.FONT_ITALIC, 1.2, (224, 37, 20),6,cv2.LINE_AA)
+            cv2.putText(frame, self.classe, (30, 100), cv2.FONT_ITALIC, 1.9, (224, 37, 20),7,cv2.LINE_AA)
            
             ret, jpeg = cv2.imencode('.jpg', frame)
             return jpeg.tobytes()
