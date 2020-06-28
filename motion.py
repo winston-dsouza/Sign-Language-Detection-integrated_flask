@@ -12,12 +12,12 @@ image_x, image_y = 64,64
 
 
 
-classes = ["Thumb Up",
-"No gesture",
-"Swiping Right",
-"Sliding Two Fingers Left",
-"Rolling Hand Forward",
-"Zooming Out With Two Fingers"]
+classes = [
+    "move left",
+    "move right",
+    "No gesture",
+    "Thumbs Up"
+    ]
 
 num_frames = 0
 
@@ -35,7 +35,7 @@ class Conv3DModel(tf.keras.Model):
 
     # Dense layers
     self.d1 = tf.keras.layers.Dense(128, activation='relu', name="d1")
-    self.out = tf.keras.layers.Dense(6, activation='softmax', name="output")
+    self.out = tf.keras.layers.Dense(4, activation='softmax', name="output")
     
 
   def call(self, x):
@@ -62,7 +62,7 @@ class VideoCameraMotion(object):
     new_model = Conv3DModel()
     new_model.compile(loss='sparse_categorical_crossentropy',
                   optimizer=tf.keras.optimizers.RMSprop())
-    new_model.load_weights('WEIGHTS_6GESTURES.index')
+    new_model.load_weights('path_to_my_weights2')
    
     def __init__(self):
         self.video = cv2.VideoCapture(0)
